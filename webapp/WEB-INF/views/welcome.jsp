@@ -8,7 +8,7 @@
   welcome, user!
   <br>
 
-  <table>
+<%--  <table>
     <caption><h3>List of all users</h3></caption>
     <thead>
       <tr>
@@ -24,7 +24,7 @@
       </tr>
     </c:forEach>
     </tbody>
-  </table>
+  </table>--%>
 
 
   <a href="${pageContext.request.contextPath}/registration">Registration page</a>

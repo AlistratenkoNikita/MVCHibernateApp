@@ -2,6 +2,7 @@ package ua.com.alistratenko.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -10,7 +11,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY )
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "login", nullable = false)
     private String login;
@@ -28,19 +29,23 @@ public class User implements Serializable {
     private String lastName;
 
     @Column(name = "active", columnDefinition = "boolean default true")
-    private boolean active;
+    private Boolean active;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private UserRole userRole;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
     public User() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public User setId(int id) {
+    public User setId(Long id) {
         this.id = id;
         return this;
     }
@@ -90,11 +95,11 @@ public class User implements Serializable {
         return this;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public User setActive(boolean active) {
+    public User setActive(Boolean active) {
         this.active = active;
         return this;
     }
@@ -106,5 +111,29 @@ public class User implements Serializable {
     public User setUserRole(UserRole userRole) {
         this.userRole = userRole;
         return this;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public User setOrders(List<Order> orders) {
+        this.orders = orders;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", active=" + active +
+                ", userRole=" + userRole +
+                ", orders=" + orders +
+                '}';
     }
 }

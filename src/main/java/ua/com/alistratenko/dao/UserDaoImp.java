@@ -19,6 +19,11 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    public void createUser(User user) {
+
+    }
+
+    @Override
     public List<User> listUsers() {
         Session session = getSession();
         List users;
@@ -27,5 +32,15 @@ public class UserDaoImp implements UserDao {
         session.close();
 
         return users;
+    }
+
+    @Override
+    public void updateUser(User user) {
+
+    }
+
+    @Override
+    public void deleteUser(User user) {
+
     }
 }

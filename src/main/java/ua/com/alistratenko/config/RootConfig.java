@@ -5,9 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import ua.com.alistratenko.entity.Order;
+import ua.com.alistratenko.entity.OrderItem;
+import ua.com.alistratenko.entity.Product;
+import ua.com.alistratenko.entity.ProductCategory;
 import ua.com.alistratenko.entity.User;
 import ua.com.alistratenko.entity.UserRole;
 
@@ -15,11 +20,13 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableAspectJAutoProxy
 @PropertySource("classpath:database.properties")
 @ComponentScan(basePackages = {
         "ua.com.alistratenko.dao",
         "ua.com.alistratenko.entity",
-        "ua.com.alistratenko.service"
+        "ua.com.alistratenko.service",
+        "ua.com.alistratenko.aspect",
 })
 public class RootConfig {
 
@@ -44,9 +51,10 @@ public class RootConfig {
         Properties props=new Properties();
         props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        props.put("hibernate.generate_statistics", env.getProperty("hibernate.generate.statistics"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class, UserRole.class);
+        factoryBean.setAnnotatedClasses(User.class, UserRole.class, ProductCategory.class, Product.class, Order.class, OrderItem.class);
         return factoryBean;
     }
 }
