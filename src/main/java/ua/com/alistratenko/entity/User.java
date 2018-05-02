@@ -2,6 +2,7 @@ package ua.com.alistratenko.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,14 +32,15 @@ public class User implements Serializable {
     @Column(name = "active", columnDefinition = "boolean default true")
     private Boolean active;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = UserRole.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Order> orders;
 
     public User() {
+        orders = new ArrayList<Order>();
     }
 
     public Long getId() {
@@ -132,8 +134,8 @@ public class User implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", active=" + active +
-                ", userRole=" + userRole +
-                ", orders=" + orders +
+                ", userRole=" + userRole.getName() +
+                ", orders=" + orders.size() +
                 '}';
     }
 }

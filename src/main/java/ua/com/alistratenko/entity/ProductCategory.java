@@ -2,6 +2,7 @@ package ua.com.alistratenko.entity;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,7 @@ public class ProductCategory {
     private List<ProductCategory> subCategories;
 
     public ProductCategory() {
+        subCategories = new ArrayList<>();
     }
 
     public Long getId() {
@@ -81,7 +83,7 @@ public class ProductCategory {
                 ", parentCategory=" + parentCategory +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", subCategories=" + subCategories +
+                ", subCategories=" + subCategories.size() +
                 '}';
     }
 }

@@ -8,9 +8,13 @@ public interface UserDao {
 
     void createUser(User user);
 
-    List<User> listUsers();
+    List listUsers();
 
     void updateUser(User user);
 
     void deleteUser(User user);
+
+    User getUserByEmail(String email);
+
+    User getUserByLogin(String login);
 }

@@ -1,9 +1,9 @@
 package ua.com.alistratenko.entity;
 
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +26,7 @@ public class UserRole {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "userRole")
+    @OneToMany(mappedBy = "userRole", fetch = FetchType.LAZY)
     private List<User> users;
 
     public UserRole() {

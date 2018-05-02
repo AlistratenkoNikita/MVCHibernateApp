@@ -1,6 +1,7 @@
 package ua.com.alistratenko.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +24,11 @@ public class Order {
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
     public Order() {
+        orderItems = new ArrayList<>();
     }
 
     public Long getId() {
@@ -78,10 +80,10 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", user=" + user +
+                ", user=" + user.getEmail() +
                 ", orderDate=" + orderDate +
                 ", totalPrice=" + totalPrice +
-                ", orderItems=" + orderItems +
+                ", orderItems=" + orderItems.size() +
                 '}';
     }
 }

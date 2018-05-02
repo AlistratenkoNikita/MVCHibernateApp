@@ -1,7 +1,14 @@
 package ua.com.alistratenko.entity;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_item")
@@ -82,8 +89,8 @@ public class OrderItem {
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
-                ", order=" + order +
-                ", product=" + product +
+                ", order=" + order.getId() +
+                ", product=" + product.getName() +
                 ", quantity=" + quantity +
                 ", price=" + price +
                 '}';

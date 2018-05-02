@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,6 +43,7 @@ public class Product {
     private List<OrderItem> orderItems;
 
     public Product() {
+        orderItems = new ArrayList<>();
     }
 
     public Long getId() {
@@ -126,6 +128,7 @@ public class Product {
                 ", price=" + price +
                 ", active=" + active +
                 ", description='" + description + '\'' +
+                ", orderItems='" + orderItems.size() + '\'' +
                 '}';
     }
 }
