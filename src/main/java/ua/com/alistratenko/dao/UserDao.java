@@ -8,7 +8,7 @@ public interface UserDao {
 
     void createUser(User user);
 
-    List listUsers();
+    List<User> listUsers();
 
     void updateUser(User user);
 
@@ -17,4 +17,6 @@ public interface UserDao {
     User getUserByEmail(String email);
 
     User getUserByLogin(String login);
+
+    User getUserById(String id);
 }

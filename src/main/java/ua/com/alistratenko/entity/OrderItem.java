@@ -9,19 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "order_item")
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    //todo link orderItem with Product correctly
-    //https://stackoverflow.com/questions/27125572/orders-products-and-order-line-hibernate-relationship-with-composite-keys
-    //https://github.com/cockroachdb/examples-orms/blob/master/java/hibernate/src/main/java/com/cockroachlabs/model/Order.java
-    //https://stackoverflow.com/questions/10367206/what-is-a-order-line
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
@@ -31,9 +28,13 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Min(0)
+    @NotNull
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Min(0)
+    @NotNull
     @Column(name = "price")
     private Double price;
 

@@ -1,6 +1,7 @@
 package ua.com.alistratenko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.alistratenko.dao.UserDao;
@@ -15,9 +16,12 @@ public class UserServiceImp implements UserService {
     @Autowired
     UserDao userDao;
 
-    @Override
+    @Autowired
+    PasswordEncoder encoder;
 
+    @Override
     public void createNewUser(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         userDao.createUser(user);
     }
 
@@ -44,5 +48,10 @@ public class UserServiceImp implements UserService {
     @Override
     public User getUserByLogin(String login) {
         return userDao.getUserByLogin(login);
+    }
+
+    @Override
+    public User getUserById(String id) {
+        return userDao.getUserById(id);
     }
 }

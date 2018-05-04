@@ -8,11 +8,11 @@
 <body>
 <h3>Welcome to registration page!</h3>
 
-<form:form method="POST" action="${pageContext.request.contextPath}/createUser" modelAttribute="user">
+<form:form method="POST" action="${pageContext.request.contextPath}/createUser" modelAttribute="newUser">
     <table>
         <tr>
             <td><form:label path="login">Login</form:label></td>
-            <td><form:input path="login" required="required"/></td>
+            <td><form:input path="login" required="required" minlength="10" maxlength="15"/></td>
         </tr>
         <tr>
             <td><form:label path="password">Password</form:label></td>
@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td><form:label path="email">Email</form:label></td>
-            <td><form:input path="email" required="required"/></td>
+            <td><form:input type="email" path="email" required="required"/></td>
         </tr>
         <tr>
             <td><form:label path="firstName">firstName</form:label></td>
@@ -35,8 +35,9 @@
             <td>
                 <form:select path = "userRole">
                     <c:forEach items="${userRolesList}" var="rolesList">
+                        <%-- Setting user role selected as a default value of select input--%>
                         <c:choose>
-                            <c:when test="${rolesList.name=='admin'}">
+                            <c:when test="${rolesList.name=='user'}">
                                 <form:option selected="selected" value = "${rolesList.id}" label = "${rolesList.name}" />
                             </c:when>
                             <c:otherwise>

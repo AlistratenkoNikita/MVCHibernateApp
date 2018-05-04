@@ -4,14 +4,13 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ua.com.alistratenko.entity.User;
 
 import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class UserDaoImp implements UserDao {
+public class UserDaoHibernate implements UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -51,6 +50,14 @@ public class UserDaoImp implements UserDao {
     public User getUserByLogin(String login) {
         Query query = sessionFactory.getCurrentSession().createQuery("from User where login = :login");
         query.setParameter("login", login);
+
+        return (User) query.uniqueResult();
+    }
+
+    @Override
+    public User getUserById(String id) {
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where id = :id");
+        query.setParameter("login", id);
 
         return (User) query.uniqueResult();
     }

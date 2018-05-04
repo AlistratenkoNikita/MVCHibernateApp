@@ -1,6 +1,10 @@
 package ua.com.alistratenko.entity;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,22 +14,30 @@ import java.util.List;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "login", nullable = false)
+    @NotNull
+    @Length(min = 6, max = 45)
+    @Column(name = "login")
     private String login;
 
+    @NotNull
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Email
+    @NotNull
+    @Length(max = 100)
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Length(max = 45)
     @Column(name = "first_name")
     private String firstName;
 
+    @Length(max = 45)
     @Column(name = "last_name")
     private String lastName;
 
@@ -36,11 +48,13 @@ public class User implements Serializable {
     @JoinColumn(name = "role_id")
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders;
 
     public User() {
         orders = new ArrayList<Order>();
+
+        active = true;
     }
 
     public Long getId() {

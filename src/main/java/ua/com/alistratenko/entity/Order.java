@@ -1,6 +1,8 @@
 package ua.com.alistratenko.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
 @Table(name = "order")
 public class Order {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -17,14 +19,17 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "order_date")
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "order_date", columnDefinition = "DATETIME")
     private Date orderDate;
 
+    @Min(0)
+    @NotNull
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
     public Order() {

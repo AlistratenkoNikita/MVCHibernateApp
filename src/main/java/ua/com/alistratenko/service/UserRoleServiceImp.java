@@ -16,7 +16,32 @@ public class UserRoleServiceImp implements UserRoleService {
     UserRoleDao userRoleDao;
 
     @Override
+    public void createNewUserRole(UserRole role) {
+        userRoleDao.createRole(role);
+    }
+
+    @Override
     public List<UserRole> getAllUserRoles() {
-        return userRoleDao.allRoles();
+        return userRoleDao.listRoles();
+    }
+
+    @Override
+    public void updateUserRole(UserRole role) {
+        userRoleDao.updateRole(role);
+    }
+
+    @Override
+    public void deleteUserRole(UserRole role) {
+        userRoleDao.deleteRole(role);
+    }
+
+    @Override
+    public UserRole getUserRoleByName(String name) {
+        return userRoleDao.getRoleByName(name);
+    }
+
+    @Override
+    public UserRole getUserRoleById(String id) {
+        return userRoleDao.getRoleById(id);
     }
 }

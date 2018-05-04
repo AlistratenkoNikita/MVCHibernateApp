@@ -1,5 +1,7 @@
 package ua.com.alistratenko.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +20,7 @@ import java.util.List;
 @Table
 public class Product {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -24,19 +28,25 @@ public class Product {
     @JoinColumn(name = "category_id")
     private ProductCategory category;
 
+    @NotNull
+    @Length(max = 45)
     @Column(name = "vendor_code")
     private String vendorCode;
 
+    @NotNull
+    @Length(max = 100)
     @Column(name = "name")
     private String name;
 
+    @Min(0)
+    @NotNull
     @Column(name = "price")
     private Float price;
 
-    @Column(name = "active")
+    @Column(name = "active", columnDefinition = "boolean default true")
     private Boolean active;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "product")

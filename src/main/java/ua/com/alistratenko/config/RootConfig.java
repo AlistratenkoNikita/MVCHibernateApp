@@ -11,8 +11,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ua.com.alistratenko.entity.*;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -46,9 +47,8 @@ public class RootConfig {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(getDataSource());
         factoryBean.setPackagesToScan("ua.com.alistratenko.entity");
-//        factoryBean.setAnnotatedClasses(User.class, UserRole.class, ProductCategory.class, Product.class, Order.class, OrderItem.class);
 
-        Properties props=new Properties();
+        Properties props = new Properties();
         props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         props.put("hibernate.globally_quoted_identifiers", env.getProperty("hibernate.globally_quoted_identifiers"));
         props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
@@ -65,5 +65,10 @@ public class RootConfig {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(s);
         return txManager;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

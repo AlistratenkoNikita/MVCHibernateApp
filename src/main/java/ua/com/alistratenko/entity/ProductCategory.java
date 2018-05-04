@@ -1,7 +1,10 @@
 package ua.com.alistratenko.entity;
 
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,7 @@ import java.util.List;
 public class ProductCategory {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -18,9 +21,13 @@ public class ProductCategory {
     @JoinColumn(name = "parent_id")
     private ProductCategory parentCategory;
 
+    @NotNull
+    @Length(max = 45)
     @Column(name = "name")
     private String name;
 
+    @NotNull
+    @Length(max = 200)
     @Column(name = "description")
     private String description;
 
